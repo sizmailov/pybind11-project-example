@@ -8,9 +8,14 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(cpp_library_bindings, m)
 {
-  py::class_<cpp_library::Foo> (m,"Foo")
+  auto pyFoo = py::class_<cpp_library::Foo>(m,"Foo");
+  pyFoo
     .def(py::init<>())
     .def("f",&cpp_library::Foo::f);
+
+  py::class_<cpp_library::Foo::Child> (pyFoo, "FooChild")
+    .def(py::init<>())
+    .def("g",&cpp_library::Foo::Child::g);
 
   auto sublibA = m.def_submodule("sublibA");
   sublibA.def("add", cpp_library::sublibA::add);
