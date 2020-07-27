@@ -34,5 +34,6 @@ PYBIND11_MODULE(cpp_library_bindings, m)
     .value("Magenta", cpp_library::sublibA::Magenta)
     .export_values();
 
+  py::register_exception<cpp_library::CppException>(m, "CppException");
 
 }
