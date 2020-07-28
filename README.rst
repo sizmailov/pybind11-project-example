@@ -1,7 +1,7 @@
 
 An example of C++ project with pybind11 bindings
 
-The primary purpose of this project is to test pybind11-stubgen functionality.
+The primary purpose of this project is to test `pybind11-stubgen <https://github.com/sizmailov/pybind11-stubgen>`_ functionality.
 
 It can be used as a C++ python module template.
 
