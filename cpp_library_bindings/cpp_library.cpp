@@ -1,6 +1,7 @@
 #include "cpp_library/Foo.h"
 #include "cpp_library/sublibA/add.h"
 #include "cpp_library/sublibA/ConsoleColors.h"
+#include "cpp_library/NestedClasses.h"
 
 #include <pybind11/pybind11.h>
 
@@ -33,6 +34,21 @@ PYBIND11_MODULE(cpp_library_bindings, m)
     .value("Blue", cpp_library::sublibA::Blue)
     .value("Magenta", cpp_library::sublibA::Magenta)
     .export_values();
+
+
+  auto pyOuter = py::class_<cpp_library::Outer> (m, "Outer");
+  auto pyInner = py::class_<cpp_library::Outer::Inner> (pyOuter, "Inner");
+
+  py::enum_<cpp_library::Outer::Inner::NestedEnum> (pyInner, "NestedEnum")
+    .value("ONE", cpp_library::Outer::Inner::NestedEnum::ONE)
+    .value("TWO", cpp_library::Outer::Inner::NestedEnum::TWO)
+    ;
+
+  pyInner
+    .def_readwrite("value", &cpp_library::Outer::Inner::value );
+
+  pyOuter
+    .def_readwrite("inner", &cpp_library::Outer::inner);
 
   py::register_exception<cpp_library::CppException>(m, "CppException");
 
