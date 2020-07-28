@@ -2,6 +2,7 @@
 #include "cpp_library/sublibA/add.h"
 #include "cpp_library/sublibA/ConsoleColors.h"
 #include "cpp_library/NestedClasses.h"
+#include "cpp_library/Inheritance.h"
 
 #include <pybind11/pybind11.h>
 
@@ -43,6 +44,16 @@ PYBIND11_MODULE(cpp_library_bindings, m)
     .value("ONE", cpp_library::Outer::Inner::NestedEnum::ONE)
     .value("TWO", cpp_library::Outer::Inner::NestedEnum::TWO)
     ;
+
+  py::class_<cpp_library::Base> pyBase(m, "Base");
+
+  pyBase
+    .def_readwrite("name", &cpp_library::Base::name);
+
+  py::class_<cpp_library::Base::Inner>(pyBase, "Inner");
+
+  py::class_<cpp_library::Derived, cpp_library::Base> (m, "Derived")
+    .def_readwrite("count", &cpp_library::Derived::count);
 
   pyInner
     .def_readwrite("value", &cpp_library::Outer::Inner::value );

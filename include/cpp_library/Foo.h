@@ -1,3 +1,4 @@
+#pragma once
 #include <stdexcept>
 
 namespace cpp_library{
