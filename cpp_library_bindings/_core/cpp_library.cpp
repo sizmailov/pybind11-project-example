@@ -8,7 +8,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(cpp_library_bindings, m)
+PYBIND11_MODULE(_core, m)
 {
   auto pyFoo = py::class_<cpp_library::Foo>(m,"Foo");
   pyFoo

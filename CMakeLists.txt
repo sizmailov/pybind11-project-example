@@ -19,6 +19,4 @@ file(GLOB_RECURSE SOURCES src/**.cpp)
 add_library(cpp_library SHARED ${SOURCES})
 target_include_directories(cpp_library PUBLIC ./include)
 
-file(GLOB_RECURSE BINDING_SOURCES cpp_library_bindings/**.cpp)
-pybind11_add_module(cpp_library_bindings MODULE ${BINDING_SOURCES})
-target_link_libraries(cpp_library_bindings PRIVATE cpp_library)
+add_subdirectory(cpp_library_bindings)
