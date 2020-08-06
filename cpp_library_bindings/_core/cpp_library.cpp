@@ -63,4 +63,11 @@ PYBIND11_MODULE(_core, m)
 
   py::register_exception<cpp_library::CppException>(m, "CppException");
 
+  m.attr("foovar") = cpp_library::Foo();
+
+  py::list foolist;
+  foolist.append(cpp_library::Foo());
+  foolist.append(cpp_library::Foo());
+
+  m.attr("foolist") = foolist;
 }
