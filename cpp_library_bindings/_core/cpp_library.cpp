@@ -5,6 +5,8 @@
 #include "cpp_library/Inheritance.h"
 
 #include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
+#include <pybind11/eigen.h>
 
 namespace py = pybind11;
 
@@ -70,4 +72,18 @@ PYBIND11_MODULE(_core, m)
   foolist.append(cpp_library::Foo());
 
   m.attr("foolist") = foolist;
+
+
+  auto numeric = m.def_submodule("numeric");
+  numeric.def("get_ndarray_int", []{ return py::array_t<int>{}; });
+  numeric.def("get_ndarray_float64", []{ return py::array_t<double>{}; });
+  numeric.def("accept_ndarray_int", [](py::array_t<int>){});
+  numeric.def("accept_ndarray_float64", [](py::array_t<double>){});
+
+
+  auto eigen = m.def_submodule("eigen");
+  eigen.def("get_matrix_int", []{ return Eigen::Matrix3i{}; });
+  eigen.def("get_vector_float64", []{ return Eigen::Vector3d{}; });
+  eigen.def("accept_matrix_int", [](Eigen::Matrix3i){});
+  eigen.def("accept_vector_float64", [](Eigen::Vector3d){});
 }

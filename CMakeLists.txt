@@ -14,6 +14,7 @@ endif()
 
 add_subdirectory(external/pybind11)
 include_directories(SYSTEM external/pybind11/include)
+include_directories(SYSTEM external/eigen)
 
 file(GLOB_RECURSE SOURCES src/**.cpp)
 add_library(cpp_library SHARED ${SOURCES})
