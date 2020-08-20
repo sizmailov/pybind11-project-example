@@ -3,4 +3,4 @@
 	url = https://github.com/pybind/pybind11.git
 [submodule "external/eigen"]
 	path = external/eigen
-	url = git@gitlab.com:libeigen/eigen.git
+	url = https://gitlab.com/libeigen/eigen.git
