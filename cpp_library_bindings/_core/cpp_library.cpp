@@ -7,6 +7,12 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
+#include <pybind11/stl.h>
+#include <pybind11/stl_bind.h>
+
+
+PYBIND11_MAKE_OPAQUE(std::map<std::string, std::complex<double>>);
+PYBIND11_MAKE_OPAQUE(std::vector<std::pair<std::string, double>>);
 
 namespace py = pybind11;
 
@@ -86,4 +92,18 @@ PYBIND11_MODULE(_core, m)
   eigen.def("get_vector_float64", []{ return Eigen::Vector3d{}; });
   eigen.def("accept_matrix_int", [](Eigen::Matrix3i){});
   eigen.def("accept_vector_float64", [](Eigen::Vector3d){});
+
+  auto opaque_types = m.def_submodule("opaque_types");
+
+  py::bind_vector<std::vector<std::pair<std::string, double>>>(opaque_types, "VectorPairStringDouble");
+  py::bind_map<std::map<std::string, std::complex<double>>>(opaque_types, "MapStringComplex");
+
+  opaque_types.def("get_complex_map", []{return std::map<std::string, std::complex<double>>{}; });
+  opaque_types.def("get_vector_of_pairs", []{return std::vector<std::pair<std::string, double>>{}; });
+
+  auto copy_types = m.def_submodule("copy_types");
+  copy_types.def("get_complex_map", []{return std::map<int, std::complex<double>>{}; });
+  copy_types.def("get_vector_of_pairs", []{return std::vector<std::pair<int, double>>{}; });
+
+
 }
