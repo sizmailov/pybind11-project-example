@@ -11,6 +11,19 @@
 #include <pybind11/stl_bind.h>
 
 
+// namespace with types that lacks pybind counterpart
+namespace forgotten {
+
+struct Unbound {};
+
+enum Enum{
+    ONE=1,
+    TWO=2
+};
+
+}
+
+
 PYBIND11_MAKE_OPAQUE(std::map<std::string, std::complex<double>>);
 PYBIND11_MAKE_OPAQUE(std::vector<std::pair<std::string, double>>);
 
@@ -104,6 +117,12 @@ PYBIND11_MODULE(_core, m)
   auto copy_types = m.def_submodule("copy_types");
   copy_types.def("get_complex_map", []{return std::map<int, std::complex<double>>{}; });
   copy_types.def("get_vector_of_pairs", []{return std::vector<std::pair<int, double>>{}; });
+
+  // This submodule will have C++ signatures in python docstrings to emulate poorly written pybind11-bindings
+  auto invalid_signatures = m.def_submodule("invalid_signatures");
+  invalid_signatures.def("get_unbound_type", []{return forgotten::Unbound{}; });
+  invalid_signatures.def("accept_unbound_type", [](std::pair<forgotten::Unbound, int>){ return 0;});
+  invalid_signatures.def("accept_unbound_enum", [](forgotten::Enum){ return 0;});
 
 
 }
