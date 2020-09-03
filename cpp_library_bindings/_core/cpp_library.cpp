@@ -80,7 +80,8 @@ PYBIND11_MODULE(_core, m)
     .def_readwrite("value", &cpp_library::Outer::Inner::value );
 
   pyOuter
-    .def_readwrite("inner", &cpp_library::Outer::inner);
+    .def_readwrite("inner", &cpp_library::Outer::inner)
+    .def_property_readonly_static("linalg", [](py::object){ return py::module::import("numpy.linalg"); });
 
   py::register_exception<cpp_library::CppException>(m, "CppException");
 
