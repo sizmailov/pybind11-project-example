@@ -124,5 +124,10 @@ PYBIND11_MODULE(_core, m)
   invalid_signatures.def("accept_unbound_type", [](std::pair<forgotten::Unbound, int>){ return 0;});
   invalid_signatures.def("accept_unbound_enum", [](forgotten::Enum){ return 0;});
 
+  py::class_<forgotten::Unbound>(invalid_signatures, "Unbound");
+  py::class_<forgotten::Enum>(invalid_signatures, "Enum");
+  invalid_signatures.def("accept_unbound_type_defaulted", [](forgotten::Unbound){ return 0;}, py::arg("x")=forgotten::Unbound{});
+  invalid_signatures.def("accept_unbound_enum_defaulted", [](forgotten::Enum){ return 0;}, py::arg("x")=forgotten::Enum::ONE);
+
 
 }
