@@ -92,6 +92,14 @@ PYBIND11_MODULE(_core, m)
   foolist.append(cpp_library::Foo());
 
   m.attr("foolist") = foolist;
+  m.attr("none") = py::none();
+  {
+      py::list li;
+      li.append(py::none{});
+      li.append(2);
+      li.append(py::dict{});
+      m.attr("list_with_none") = li;
+  }
 
 
   auto numeric = m.def_submodule("numeric");
