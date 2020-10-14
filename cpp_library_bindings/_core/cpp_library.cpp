@@ -57,6 +57,11 @@ PYBIND11_MODULE(_core, m)
     .value("Magenta", cpp_library::sublibA::Magenta)
     .export_values();
 
+  sublibA.def("accept_defaulted_enum",
+      [](const cpp_library::sublibA::ConsoleForegroundColor& color){},
+      py::arg("color") = cpp_library::sublibA::ConsoleForegroundColor::Blue
+  );
+
 
   auto pyOuter = py::class_<cpp_library::Outer> (m, "Outer");
   auto pyInner = py::class_<cpp_library::Outer::Inner> (pyOuter, "Inner");
