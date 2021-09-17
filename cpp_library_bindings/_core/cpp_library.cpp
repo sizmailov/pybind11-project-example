@@ -143,5 +143,10 @@ PYBIND11_MODULE(_core, m)
   invalid_signatures.def("accept_unbound_type_defaulted", [](forgotten::Unbound){ return 0;}, py::arg("x")=forgotten::Unbound{});
   invalid_signatures.def("accept_unbound_enum_defaulted", [](forgotten::Enum){ return 0;}, py::arg("x")=forgotten::Enum::ONE);
 
+  auto issues = m.def_submodule("issues");
+  issues.def("issue_51", [](int*, int*){}, R"docstring(
+
+    Use-case:
+        issue_51(os.get_handle_inheritable, os.set_handle_inheritable))docstring");
 
 }
