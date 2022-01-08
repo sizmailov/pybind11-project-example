@@ -73,5 +73,8 @@ setup(
     packages=find_packages(),
     cmdclass=dict(build_ext=CMakeBuild),
     url="https://github.com/sizmailov/pybind11-project-example",
-    zip_safe=False
+    zip_safe=False,
+    install_requires=[
+        "numpy"
+    ]
 )
